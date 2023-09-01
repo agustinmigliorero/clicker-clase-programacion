@@ -12,16 +12,42 @@
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
   </head>
   <body>
-    <h1>Monedas: <span id="span-monedas"></span></h1>
-    <h2>Actualmente generas: <span id="span-ingresos"></span></h2>
-    <button id="btn-moneda">Click Moneda</button>
-    <br />
-    <br />
-    <div
-      class="btn-group-vertical container-btn-edificios"
-      role="group"
-      aria-label="Vertical button group"
-    ></div>
+    <div class="row">
+      <div class="col-3 borde-columnas-laterales">
+        <h1>Monedas: <span id="span-monedas"></span></h1>
+        <h2>Actualmente generas: <span id="span-ingresos"></span></h2>
+      </div>
+      <div class="col-6 borde-columnas-centro"></div>
+      <div class="col-3 borde-columnas-laterales"></div>
+    </div>
+    <div class="row">
+      <div
+        class="col-3 borde-columnas-laterales borde-columnas-laterales-inferiores"
+      >
+        <div class="container-moneda">
+          <img
+            id="btn-moneda"
+            class="boton-moneda"
+            src="./imagenes/moneda.png"
+            alt=""
+          />
+        </div>
+        <!-- <button id="btn-moneda">Click Moneda</button> -->
+      </div>
+      <div
+        class="col-6 borde-columnas-centro borde-columnas-centro-inferior"
+      ></div>
+      <div
+        class="col-3 borde-columnas-laterales borde-columnas-laterales-inferiores container-edificios"
+      >
+        <div
+          class="btn-group-vertical container-btn-edificios"
+          role="group"
+          aria-label="Vertical button group"
+        ></div>
+      </div>
+    </div>
+
     <script src="edificios.js"></script>
     <script src="main.js"></script>
   </body>

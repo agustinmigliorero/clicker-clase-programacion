@@ -1,0 +1,42 @@
+.borde-columnas-centro {
+  border-left: 15px solid #f0b659;
+  border-right: 15px solid #f0b659;
+  border-top: 15px solid #f0b659;
+}
+
+.borde-columnas-laterales {
+  padding: 1%;
+  border-top: 15px solid #f0b659;
+}
+
+.borde-columnas-laterales-inferiores {
+  border-bottom: 15px solid #f0b659;
+}
+
+.borde-columnas-centro-inferior {
+  border-bottom: 15px solid #f0b659;
+}
+
+.container-moneda {
+  text-align: center;
+  padding: 2%;
+}
+
+.boton-moneda {
+  width: 80%;
+  transition: 0.25s;
+}
+
+.boton-moneda:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.boton-moneda:active {
+  transform: scale(0.9);
+  opacity: 0.9;
+}
+
+.container-edificios {
+  text-align: center;
+}

@@ -2,7 +2,55 @@
   border-left: 15px solid #f0b659;
   border-right: 15px solid #f0b659;
   border-top: 15px solid #f0b659;
+  color: #00ffaa;
+  color: rgb(0, 255, 0);
 }
+
+/*
+4234
+
+4 + 30 + 200 + 4000
+
+10**0 = 1
+10**1 = 10
+10**2 = 100
+10**3 = 1000
+
+
+
+10101011
+
+2**0 = 1
+2**1 = 2
+2**2 = 4
+2**3 = 8
+2**4 = 16
+        32
+        64
+        128
+1 + 2 + 0 + 8 + 0 + 32 + 0 + 128 = 43 + 128 = 171
+
+0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f
+
+ff
+
+16**0 = 1
+16**1 = 16
+
+15 * 1 = 15
+15 * 16 = 240
+240 + 15 = 255
+
+11111111 === ff === 255
+
+fa = 250 - 128 = 122 - 64 = 58 - 32 = 26 - 16 = 10 - 8 = 2
+
+11111010
+
+10 * 1 = 10
+15 * 16 = 240
+
+*/
 
 .borde-columnas-laterales {
   padding: 1%;
@@ -29,11 +77,11 @@
 
 .boton-moneda:hover {
   cursor: pointer;
-  transform: scale(1.1);
+  transform: scale(1.3);
 }
 
 .boton-moneda:active {
-  transform: scale(0.9);
+  transform: scale(0.8);
   opacity: 0.9;
 }
 

@@ -39,4 +39,14 @@ let dataMejoras = [
       bonus: 2,
     },
   ],
+  [
+    {
+      nombre: "Mejora1 Ed2",
+      precio: 100,
+      IDEdificio: 1,
+      tipo: "edificio",
+      requisito: 10,
+      bonus: 2,
+    },
+  ],
 ];

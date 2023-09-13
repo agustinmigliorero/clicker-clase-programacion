@@ -88,3 +88,20 @@ fa = 250 - 128 = 122 - 64 = 58 - 32 = 26 - 16 = 10 - 8 = 2
 .container-edificios {
   text-align: center;
 }
+
+.notificaciones {
+  width: 50%;
+  position: absolute !important;
+  text-align: center;
+  margin-left: 25%;
+  margin-top: 3%;
+  color: white;
+  font-weight: 900;
+  font-size: 20px;
+  transition: 3s;
+}
+
+.notificacion-compra {
+  background-color: #ff3333;
+  transition: all 0.5s ease 0.5s;
+}

@@ -4,6 +4,7 @@ const btnMoneda = document.querySelector("#btn-moneda");
 const containerBtnEdificios = document.querySelector(
   ".container-btn-edificios"
 );
+const notificacionCompra = document.querySelector("#notificacion-compra");
 const containerBtnMejoras = document.querySelector(".container-btn-mejoras");
 let btnEdificios;
 let spanCantidadEdificios;
@@ -13,15 +14,32 @@ let spanCostoMejoras;
 
 let juego = {
   monedas: 0,
+  poderClick: 1,
 };
 
 let edificios = [];
 let mejoras = [];
 
+let arrAudios = [];
+let contadorAudio = 0;
+for (let i = 0; i < 20; i++) {
+  arrAudios.push(new Audio("./audio/pop3.mp3"));
+}
+
+function reproducirAudio() {
+  arrAudios[contadorAudio].volume = 0.3;
+  arrAudios[contadorAudio].play();
+  if (contadorAudio >= 19) {
+    contadorAudio = 0;
+  } else {
+    contadorAudio++;
+  }
+}
+
 function cargarDataEdificios() {
   for (let i = 0; i < dataEdificios.length; i++) {
     let { nombre, precio, ingresos } = dataEdificios[i];
-    edificios.push(new Edificio(nombre, precio, ingresos, i));
+    edificios.push(new Edificio(nombre, precio, ingresos));
   }
 }
 
@@ -50,15 +68,24 @@ function comprarEdificio(edificio) {
     edificio.cantidad += 1;
     edificio.precio *= 1.15;
   } else {
-    alert(
-      `Tenes ${juego.monedas.toFixed(
-        2
-      )} y el edificio cuesta ${edificio.precio.toFixed(2)}, te faltan ${(
-        edificio.precio - juego.monedas
-      ).toFixed(2)} monedas.`
-    );
+    notificacionCompra.style.opacity = "0";
+    notificacionCompra.style.transition = "all 0.2s ease 0.2s";
+    // notificacionCompra.style.display = "block";
+    notificacionCompra.style.opacity = "1";
+    notificacionCompra.textContent = `Tenes ${juego.monedas.toFixed(
+      2
+    )} y el edificio cuesta ${edificio.precio.toFixed(2)}, te faltan ${(
+      edificio.precio - juego.monedas
+    ).toFixed(2)} monedas.`;
+    setTimeout(function () {
+      notificacionCompra.style.transition = "all 0.2s ease 0.2s";
+      notificacionCompra.style.opacity = "0";
+      // notificacionCompra.style.display = "none";
+    }, 3000);
   }
 }
+
+let mejoras2 = [];
 
 function cargarDataMejoras() {
   for (let i = 0; i < dataMejoras.length; i++) {
@@ -69,8 +96,11 @@ function cargarDataMejoras() {
       mejoras.push(
         new Mejora(nombre, precio, IDEdificio, tipo, requisito, bonus)
       );
+      arrObjetos.push(
+        new Mejora(nombre, precio, IDEdificio, tipo, requisito, bonus)
+      );
     }
-    // mejoras.push(arrObjetos);
+    mejoras2.push(arrObjetos);
   }
 }
 
@@ -96,8 +126,18 @@ function comprarMejora(mejora) {
   if (juego.monedas >= mejora.precio) {
     juego.monedas -= mejora.precio;
     mejora.comprado = true;
-    edificios[mejora.IDEdificio].ingresos *= 2;
+    edificios[mejora.IDEdificio].ingresos *= mejora.bonus;
     actualizarDisplay();
+  } else {
+    notificacionCompra.style.display = "block";
+    notificacionCompra.textContent = `Tenes ${juego.monedas.toFixed(
+      2
+    )} y la mejora cuesta ${mejora.precio.toFixed(2)}, te faltan ${(
+      mejora.precio - juego.monedas
+    ).toFixed(2)} monedas.`;
+    setTimeout(function () {
+      notificacionCompra.style.display = "none";
+    }, 3000);
   }
 }
 
@@ -131,9 +171,23 @@ function actualizarDisplay() {
   spanIngresos.textContent = `${(calcularIngresos100ms() * 10).toFixed(2)}/s`;
 }
 
+function animacionClickMoneda() {
+  const containerAnimacionMoneda = document.querySelector(
+    ".container-animacion-moneda"
+  );
+  let posicionMoneda = btnMoneda.getBoundingClientRect();
+  let posX = posicionMoneda.x;
+  let posY = posicionMoneda.y;
+
+  let elementoNumero = `<div class="numeros-animacion-moneda"><div class="numero-animacion-moneda" style="position:absolute;left:${posX}px;top:${posY}px;">+${juego.poderClick}</div></div>`;
+}
+
+// containerAnimacionMoneda.innerHTML += elementoNumero;
+
 btnMoneda.addEventListener("click", function () {
   juego.monedas += 1;
   actualizarDisplay();
+  reproducirAudio();
 });
 
 cargarDataEdificios();
@@ -145,3 +199,30 @@ setInterval(function () {
   juego.monedas += calcularIngresos100ms();
   actualizarDisplay();
 }, 100);
+
+function guardarPartida() {
+  localStorage.setItem("juego", JSON.stringify({ juego, edificios, mejoras }));
+}
+
+function borrarPartida() {
+  localStorage.removeItem("juego");
+}
+
+function importarPartida(partida) {
+  localStorage.setItem("juego", partida);
+}
+
+function exportarPartida() {
+  return localStorage.juego;
+}
+
+function cargarPartida() {
+  let partidaACargar = JSON.parse(localStorage.juego);
+  juego = partidaACargar.juego;
+  edificios = partidaACargar.edificios;
+  mejoras = partidaACargar.mejoras;
+}
+
+if (localStorage.juego) {
+  cargarPartida();
+}

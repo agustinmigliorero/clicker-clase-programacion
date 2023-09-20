@@ -13,18 +13,60 @@
   </head>
   <body>
     <div
-      class="alert notificaciones notificacion-compra"
+      class="alert notificaciones notificacion-compra esconder-notificacion"
       id="notificacion-compra"
       role="alert"
     >
       No tienes suficientes monedas para comprar eso.
+    </div>
+    <div class="modal-mio esconder-modal" id="modal-exportar-partida">
+      <h1>Exporta tu partida!</h1>
+      <textarea
+        name=""
+        id="textarea-exportar-partida"
+        cols="70"
+        rows="10"
+      ></textarea>
+      <br />
+      <button id="btn-cerrar-modal-exportar" class="btn btn-danger">
+        Cancelar
+      </button>
+    </div>
+    <div class="modal-mio esconder-modal" id="modal-importar-partida">
+      <h1>Importa tu partida!</h1>
+      <textarea
+        name=""
+        id="textarea-importar-partida"
+        cols="70"
+        rows="10"
+      ></textarea>
+      <br />
+      <button id="btn-importar-partida" class="btn btn-success">
+        Cargar Partida
+      </button>
+      <button
+        id="btn-cerrar-modal-importar"
+        class="btn btn-danger btn-cerrar-modal"
+      >
+        Cancelar
+      </button>
     </div>
     <div class="row">
       <div class="col-3 borde-columnas-laterales">
         <h1>Monedas: <span id="span-monedas"></span></h1>
         <h2>Actualmente generas: <span id="span-ingresos"></span></h2>
       </div>
-      <div class="col-6 borde-columnas-centro"></div>
+      <div class="col-6 borde-columnas-centro">
+        <button id="btn-modal-exportar-partida" class="btn btn-info">
+          Exportar Partida
+        </button>
+        <button id="btn-modal-importar-partida" class="btn btn-success">
+          Importar Partida
+        </button>
+        <button id="btn-borrar-partida" class="btn btn-danger">
+          Borrar Partida
+        </button>
+      </div>
       <div class="col-3 borde-columnas-laterales">
         <div class="btn-group-vertical container-btn-mejoras"></div>
       </div>

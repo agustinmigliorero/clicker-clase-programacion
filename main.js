@@ -6,6 +6,31 @@ const containerBtnEdificios = document.querySelector(
 );
 const notificacionCompra = document.querySelector("#notificacion-compra");
 const containerBtnMejoras = document.querySelector(".container-btn-mejoras");
+const btnModalImportarPartida = document.querySelector(
+  "#btn-modal-importar-partida"
+);
+const btnModalExportarPartida = document.querySelector(
+  "#btn-modal-exportar-partida"
+);
+const btnBorrarPartida = document.querySelector("#btn-borrar-partida");
+const modalImportarPartida = document.querySelector("#modal-importar-partida");
+const modalExportarPartida = document.querySelector("#modal-exportar-partida");
+const btnCerrarModalExportar = document.querySelector(
+  "#btn-cerrar-modal-exportar"
+);
+const btnCerrarModalImportar = document.querySelector(
+  "#btn-cerrar-modal-importar"
+);
+const textAreaExportarPartida = document.querySelector(
+  "#textarea-exportar-partida"
+);
+const textAreaImportarPartida = document.querySelector(
+  "#textarea-importar-partida"
+);
+const btnImportarPartida = document.querySelector("#btn-importar-partida");
+const containerAnimacionMoneda = document.querySelector(
+  ".container-animacion-moneda"
+);
 let btnEdificios;
 let spanCantidadEdificios;
 let spanCostoEdificios;
@@ -62,26 +87,32 @@ function cargarBotonesEdificios() {
   }
 }
 
+let timeOut;
 function comprarEdificio(edificio) {
   if (juego.monedas >= edificio.precio) {
     juego.monedas -= edificio.precio;
     edificio.cantidad += 1;
     edificio.precio *= 1.15;
   } else {
-    notificacionCompra.style.opacity = "0";
-    notificacionCompra.style.transition = "all 0.2s ease 0.2s";
-    // notificacionCompra.style.display = "block";
-    notificacionCompra.style.opacity = "1";
+    notificacionCompra.classList.remove("esconder-notificacion");
+    notificacionCompra.classList.add("mostrar-notificacion");
     notificacionCompra.textContent = `Tenes ${juego.monedas.toFixed(
       2
     )} y el edificio cuesta ${edificio.precio.toFixed(2)}, te faltan ${(
       edificio.precio - juego.monedas
     ).toFixed(2)} monedas.`;
-    setTimeout(function () {
-      notificacionCompra.style.transition = "all 0.2s ease 0.2s";
-      notificacionCompra.style.opacity = "0";
-      // notificacionCompra.style.display = "none";
-    }, 3000);
+
+    function timeOutNotificacion() {
+      if (timeOut) {
+        clearTimeout(timeOut);
+      }
+      timeOut = setTimeout(function () {
+        notificacionCompra.classList.add("esconder-notificacion");
+        notificacionCompra.classList.remove("mostrar-notificacion");
+        // notificacionCompra.style.display = "none";
+      }, 3000);
+    }
+    timeOutNotificacion();
   }
 }
 
@@ -171,23 +202,12 @@ function actualizarDisplay() {
   spanIngresos.textContent = `${(calcularIngresos100ms() * 10).toFixed(2)}/s`;
 }
 
-function animacionClickMoneda() {
-  const containerAnimacionMoneda = document.querySelector(
-    ".container-animacion-moneda"
-  );
-  let posicionMoneda = btnMoneda.getBoundingClientRect();
-  let posX = posicionMoneda.x;
-  let posY = posicionMoneda.y;
-
-  let elementoNumero = `<div class="numeros-animacion-moneda"><div class="numero-animacion-moneda" style="position:absolute;left:${posX}px;top:${posY}px;">+${juego.poderClick}</div></div>`;
-}
-
-// containerAnimacionMoneda.innerHTML += elementoNumero;
-
 btnMoneda.addEventListener("click", function () {
   juego.monedas += 1;
   actualizarDisplay();
   reproducirAudio();
+  // animacionClickMoneda();
+  animacionNumerosMoneda();
 });
 
 cargarDataEdificios();
@@ -202,6 +222,7 @@ setInterval(function () {
 
 function guardarPartida() {
   localStorage.setItem("juego", JSON.stringify({ juego, edificios, mejoras }));
+  console.log(`La partida se guardo en: ${new Date()}`);
 }
 
 function borrarPartida() {
@@ -223,6 +244,72 @@ function cargarPartida() {
   mejoras = partidaACargar.mejoras;
 }
 
+setInterval(guardarPartida, 30000);
+
 if (localStorage.juego) {
   cargarPartida();
 }
+
+document.addEventListener("keydown", function (evento) {
+  if (evento.ctrlKey && evento.key == "s") {
+    evento.preventDefault();
+    guardarPartida();
+  }
+});
+
+//MODALES IMPORTAR/EXPORTAR PARTIDA
+btnModalExportarPartida.addEventListener("click", function () {
+  modalExportarPartida.classList.remove("esconder-modal");
+  textAreaExportarPartida.textContent = exportarPartida();
+});
+
+btnModalImportarPartida.addEventListener("click", function () {
+  modalImportarPartida.classList.remove("esconder-modal");
+});
+
+btnCerrarModalExportar.addEventListener("click", function () {
+  modalExportarPartida.classList.add("esconder-modal");
+});
+
+btnCerrarModalImportar.addEventListener("click", function () {
+  modalImportarPartida.classList.add("esconder-modal");
+});
+
+btnImportarPartida.addEventListener("click", function () {
+  let partidaACargar = textAreaImportarPartida.value;
+  importarPartida(partidaACargar);
+});
+
+btnBorrarPartida.addEventListener("click", function () {
+  borrarPartida();
+});
+
+//ANIMACION NUMEROS MONEDA
+function animacionNumerosMoneda() {
+  let posicionMoneda = btnMoneda.getBoundingClientRect();
+  let posX = posicionMoneda.x;
+  let posY = posicionMoneda.y;
+  posX += Math.random() * 80 - 40;
+  posY += Math.random() * 80 - 40;
+  let elementoNumeroHTML = `<span><b>+${juego.poderClick}<b></span>`;
+  let elementoNuevo = document.createElement("div");
+  elementoNuevo.classList.add("contenedor-numero-moneda");
+  elementoNuevo.classList.add("animacion-moneda");
+  elementoNuevo.innerHTML = elementoNumeroHTML;
+  elementoNuevo.style.position = "absolute";
+  elementoNuevo.style.top = `${posY}px`;
+  elementoNuevo.style.left = `${posX}px`;
+  containerAnimacionMoneda.appendChild(elementoNuevo);
+
+  setTimeout(function () {
+    containerAnimacionMoneda.removeChild(containerAnimacionMoneda.firstChild);
+  }, 1000);
+}
+
+// function animacionClickMoneda() {
+//   let posicionMoneda = btnMoneda.getBoundingClientRect();
+//   let posX = posicionMoneda.x;
+//   let posY = posicionMoneda.y;
+
+//   let elementoNumero = `<div class="numeros-animacion-moneda"><div class="numero-animacion-moneda" style="position:absolute;left:${posX}px;top:${posY}px;">+${juego.poderClick}</div></div>`;
+// }

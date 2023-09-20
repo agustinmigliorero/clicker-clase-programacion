@@ -98,10 +98,60 @@ fa = 250 - 128 = 122 - 64 = 58 - 32 = 26 - 16 = 10 - 8 = 2
   color: white;
   font-weight: 900;
   font-size: 20px;
-  transition: 3s;
+  transition: all 0.2s ease 0.2s;
 }
 
 .notificacion-compra {
   background-color: #ff3333;
-  transition: all 0.5s ease 0.5s;
+  transition: all 0.3s ease 0.3s;
+}
+
+.mostrar-notificacion {
+  opacity: 1;
+}
+
+.esconder-notificacion {
+  opacity: 0;
+}
+
+.modal-mio {
+  background-color: white;
+  position: absolute;
+  margin-top: 5%;
+  width: 60%;
+  height: 60%;
+  margin-left: 20%;
+  z-index: 100;
+  border: 2px solid black;
+}
+
+.esconder-modal {
+  display: none;
+}
+
+.contenedor-numero-moneda {
+  font-weight: bold;
+  color: #fff;
+  width: 200px;
+  height: 20px;
+  font-size: 24px;
+  text-align: center;
+  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+  font-family: "Fredoka One", cursive;
+}
+
+.animacion-moneda {
+  transition: all 1.1s;
+  animation: animacion-moneda 1.1s infinite linear;
+}
+
+@keyframes animacion-moneda {
+  from {
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+  to {
+    opacity: 0;
+    transform: translate(0px, -100px);
+  }
 }

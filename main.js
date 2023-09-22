@@ -120,18 +120,13 @@ let mejoras2 = [];
 
 function cargarDataMejoras() {
   for (let i = 0; i < dataMejoras.length; i++) {
-    let arrObjetos = [];
     for (let j = 0; j < dataMejoras[i].length; j++) {
       let { nombre, precio, IDEdificio, tipo, requisito, bonus } =
         dataMejoras[i][j];
       mejoras.push(
         new Mejora(nombre, precio, IDEdificio, tipo, requisito, bonus)
       );
-      arrObjetos.push(
-        new Mejora(nombre, precio, IDEdificio, tipo, requisito, bonus)
-      );
     }
-    mejoras2.push(arrObjetos);
   }
 }
 
@@ -278,10 +273,12 @@ btnCerrarModalImportar.addEventListener("click", function () {
 btnImportarPartida.addEventListener("click", function () {
   let partidaACargar = textAreaImportarPartida.value;
   importarPartida(partidaACargar);
+  location.reload();
 });
 
 btnBorrarPartida.addEventListener("click", function () {
   borrarPartida();
+  location.reload();
 });
 
 //ANIMACION NUMEROS MONEDA

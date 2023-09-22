@@ -138,6 +138,7 @@ fa = 250 - 128 = 122 - 64 = 58 - 32 = 26 - 16 = 10 - 8 = 2
   text-align: center;
   text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
   font-family: "Fredoka One", cursive;
+  pointer-events: none;
 }
 
 .animacion-moneda {

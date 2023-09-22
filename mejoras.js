@@ -38,6 +38,38 @@ let dataMejoras = [
       requisito: 25,
       bonus: 2,
     },
+    {
+      nombre: "Mejora2 Ed1",
+      precio: 500,
+      IDEdificio: 0,
+      tipo: "edificio",
+      requisito: 25,
+      bonus: 2,
+    },
+    {
+      nombre: "Mejora2 Ed1",
+      precio: 500,
+      IDEdificio: 0,
+      tipo: "edificio",
+      requisito: 25,
+      bonus: 2,
+    },
+    {
+      nombre: "Mejora2 Ed1",
+      precio: 500,
+      IDEdificio: 0,
+      tipo: "edificio",
+      requisito: 25,
+      bonus: 2,
+    },
+    {
+      nombre: "Mejora2 Ed1",
+      precio: 500,
+      IDEdificio: 0,
+      tipo: "edificio",
+      requisito: 25,
+      bonus: 2,
+    },
   ],
   [
     {

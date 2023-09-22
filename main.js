@@ -152,7 +152,11 @@ function comprarMejora(mejora) {
   if (juego.monedas >= mejora.precio) {
     juego.monedas -= mejora.precio;
     mejora.comprado = true;
-    edificios[mejora.IDEdificio].ingresos *= mejora.bonus;
+    if (mejora.IDEdificio < 0) {
+      juego.poderClick *= mejora.bonus;
+    } else {
+      edificios[mejora.IDEdificio].ingresos *= mejora.bonus;
+    }
     actualizarDisplay();
   } else {
     notificacionCompra.style.display = "block";
@@ -184,8 +188,13 @@ function actualizarDisplay() {
   for (let i = 0; i < btnMejoras.length; i++) {
     if (!mejoras[i].comprado) {
       if (
-        mejoras[i].tipo === "edificio" &&
+        mejoras[i].IDEdificio >= 0 &&
         mejoras[i].requisito <= edificios[mejoras[i].IDEdificio].cantidad
+      ) {
+        btnMejoras[i].style.display = "inline";
+      } else if (
+        mejoras[i].IDEdificio < 0 &&
+        mejoras[i].requisito <= juego.monedas
       ) {
         btnMejoras[i].style.display = "inline";
       }

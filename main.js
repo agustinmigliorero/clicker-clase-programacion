@@ -204,6 +204,9 @@ function actualizarDisplay() {
   }
   spanMonedas.textContent = juego.monedas.toFixed(2);
   spanIngresos.textContent = `${(calcularIngresos100ms() * 10).toFixed(2)}/s`;
+  document.querySelector(
+    "title"
+  ).textContent = `Monedas: ${juego.monedas.toFixed(0)}`;
 }
 
 btnMoneda.addEventListener("click", function () {
@@ -220,9 +223,9 @@ cargarDataMejoras();
 cargarBotonesMejoras();
 
 setInterval(function () {
-  juego.monedas += calcularIngresos100ms();
+  juego.monedas += calcularIngresos100ms() * 10;
   actualizarDisplay();
-}, 100);
+}, 1000);
 
 function guardarPartida() {
   localStorage.setItem("juego", JSON.stringify({ juego, edificios, mejoras }));
